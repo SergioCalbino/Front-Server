@@ -1,6 +1,7 @@
 import axios from "axios"
 import { Link, useNavigate } from "react-router-dom"
 import { ChangeEvent, useState, FormEvent  } from "react";
+import Alert from '../Alert'
 
 // import Alert from "../Alert"
 import Swal from "sweetalert2"
@@ -15,7 +16,7 @@ const Login = () => {
 	
 	const [correo, setCorreo] = useState<string | undefined>('')
 	const [password, setPassword] = useState<string | undefined>('')
-	const [alerta, setAlerta] = useState({})
+	const [alerta, setAlerta] = useState({error: false, msg: ''})
 	
 	
 	const login = async() => {
@@ -41,7 +42,7 @@ const Login = () => {
 	const handleSubmit = (e:submitEvent) => {
 		e.preventDefault()
 
-		if (!correo && !password) {
+		if (!correo || !password) {
 			return setAlerta({msg: 'Todos Los campos son obligatorios', error: true})
 		}
 
@@ -49,7 +50,7 @@ const Login = () => {
 
 	}
 
-	// const { msg } = alerta
+ 	
 
   return (
     <>
@@ -59,9 +60,8 @@ const Login = () => {
           </h1>
         </div>
         
-		{/* { msg && <Alert
-			alerta={alert}
-		/> } */}
+		{alerta.error && <Alert alerta={{ error: true, msg: 'Ocurrió un error al iniciar sesión' }} />}
+
         <div  className='mt-20 md:mt-5 shadow-lg px-5 py-10 rounded-xl bg-white'>
                 <form onSubmit={handleSubmit} className="mr-8 md:ml-8">
 				<div className="my-5" >
