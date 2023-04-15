@@ -3,25 +3,10 @@ import { ChangeEvent, useState, FormEvent  } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Alert from '../Alert'
 import Swal from "sweetalert2";
+import { InterObjAlerta, InterObjUser } from "../types/interfaces";
 
 
-interface InterObjUser {
-    nombre: string;
-    correo: string;
-    password: string;
-    repPassword: string;
-    rol:'USER_ROLE'
-}
 
-interface InterObjAlerta  {
-    mailVacio: boolean;
-    nombreVacio: boolean;
-    passwordCorto: boolean;
-    pNoCoincide: boolean,
-    show: boolean
-
-
-}
 
 type changeEvent = React.ChangeEvent<HTMLInputElement>
 type submitEvent = FormEvent<HTMLFormElement>

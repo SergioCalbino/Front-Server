@@ -5,6 +5,8 @@ import './App.css'
 import AuthLayout from './layout/AuthLayout';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Products from './components/products/Products';
+import CreateProduct from './components/products/CreateProduct';
 
 function App() {
   
@@ -17,10 +19,11 @@ function App() {
             <Route path="/" element={<AuthLayout/>} />
             <Route index element={<Login/>} />
             <Route path="register" element={<Register/>} />
+            <Route path="/products" element={<Products/>} />
+            <Route path="/create-product" element={<CreateProduct/>} />
             {/* <Route path="forget-password" element={<ForgetPassword/>} />
             </Route>
-            <Route path="/products" element={<Products/>} />
-            <Route path="/create-product" element={<CreateProduct/>} /> */}
+             */}
       </Routes>
     </BrowserRouter>
   </>

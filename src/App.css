@@ -5,6 +5,10 @@
   text-align: center;
 }
 
+.custom-bg-dark {
+  background-color: #FFF2CC;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
