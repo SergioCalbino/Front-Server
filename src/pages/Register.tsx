@@ -1,7 +1,8 @@
 import axios from "axios";
 import { ChangeEvent, useState, FormEvent  } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Alert from '../Alert'
+import Swal from "sweetalert2";
 
 
 interface InterObjUser {
@@ -47,11 +48,35 @@ const Register = () => {
   const [reg, setReg] = useState(objUser);
   const [alerta, setAlerta] = useState({error: false, msg: '', show: false});
   const [alertaCampos, setAlertaCampos] = useState(initialAlerta);
+	const navigate = useNavigate()
+
 
   
   const register = async () => {
-    const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/usuarios`, reg)
-    console.log(data)
+    await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/usuarios`, reg)
+              .then(res => {
+                localStorage.setItem('token', res.data.token)
+                Swal.fire({
+                  position: 'center',
+                  icon: 'success',
+                  title: `Gracias por registrate en nuesto sitio`,
+                  showConfirmButton: true,
+                })
+                navigate('/products')
+              })
+              .catch(err => 
+                Swal.fire({
+                  position: 'center',
+                  icon: 'error',
+                  title: `el ${ err.response.data.errors[0].msg }`,
+                  showConfirmButton: true,
+                }))
+              // setAlerta({
+              //   msg: err.response.data.msg,
+              //   error: true,
+              //   show: true
+              // }))
+    
   }
 
   const handleChange = (e:changeEvent) => {
@@ -109,6 +134,7 @@ const Register = () => {
 
   return (
     <>
+      <div className="container mx-auto my-20 md:w-1/2 p-5 border-blue-700 rounded-lg" >
       <div>
         <h1 className="text-zinc-800 font-bold text-2xl mt-12 gap-10 p-5">
           Registrate <span className="text-red-600">Llenando el formulario</span>
@@ -214,7 +240,7 @@ const Register = () => {
           </Link>
         </nav>
     </div>
-    
+    </div>
     </>
   );
 };
