@@ -2,9 +2,11 @@ import axios from "axios"
 import { Link, useNavigate } from "react-router-dom"
 import { ChangeEvent, useState, FormEvent  } from "react";
 import Alert from '../Alert'
+import { loginUser } from "../redux/states/user";
 
 // import Alert from "../Alert"
 import Swal from "sweetalert2"
+import { useDispatch } from "react-redux";
 
 
 const Login = () => {
@@ -13,6 +15,7 @@ const Login = () => {
     type submitEvent = FormEvent<HTMLFormElement>
 
 	const navigate = useNavigate()
+	const dispatch = useDispatch()
 	
 	const [correo, setCorreo] = useState<string | undefined>('')
 	const [password, setPassword] = useState<string | undefined>('')
@@ -23,6 +26,7 @@ const Login = () => {
 
 			await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, {correo, password})
 			.then(res => {
+				dispatch(loginUser(res.data))
 				localStorage.setItem('token', res.data.token)
 				Swal.fire({
 					position: 'center',
