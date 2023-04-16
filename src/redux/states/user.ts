@@ -17,8 +17,18 @@ export const userSlice = createSlice({
     name: 'user',
     initialState: EmptyUserState,
     reducers: {
-        loginUser :(state, action ) => {
-            return state = action.payload
+        loginUser: (state, action ) => {
+            return {
+                uid: action.payload.usuario.uid,
+                nombre: action.payload.usuario.nombre,
+                correo: action.payload.usuario.correo,
+                password: '',
+                img: '',
+                rol: action.payload.usuario.rol,
+                estado: true,
+                google: true,
+                token: action.payload.token
+            }
         },
         createUser: (state, action) => {
             return action.payload

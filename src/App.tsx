@@ -9,6 +9,8 @@ import Products from './components/products/Products';
 import CreateProduct from './components/products/CreateProduct';
 import { PrivateRoutes, PublicRoutes } from './models';
 import AuthGuard from './guards/auth.guard';
+import Dashboard from './admin/Dashboard';
+import Modal from './admin/Modal';
 
 function App() {
   
@@ -21,7 +23,7 @@ function App() {
             //Rutas publicas
             {/* <Route path="/" element={<AuthLayout/>} /> */}
             {/* si esta logeuado, va al private, si no esta logueado, lo mando al loguien */}
-            <Route path='/' element={<Navigate to={PrivateRoutes.DASHBOARD}/>} />
+            <Route path='/' element={<Navigate to={PrivateRoutes.PRIVATE}/>} />
             <Route path={PublicRoutes.LOGIN} element={<Login/>} />
             <Route path="register" element={<Register/>} />
             <Route path="/products" element={<Products/>} />
@@ -29,7 +31,7 @@ function App() {
             //Rutas privadas. el * permite que todas pasen por el Guard
             <Route element={<AuthGuard/>} >
 
-                <Route path={`${PrivateRoutes.DASHBOARD}/*`} element={<CreateProduct/>} />
+                <Route path={`${PrivateRoutes.PRIVATE}/*`} element={<Modal/>} />
             </Route>
             {/* <Route path="forget-password" element={<ForgetPassword/>} />
             </Route>
