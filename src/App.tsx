@@ -10,7 +10,9 @@ import CreateProduct from './components/products/CreateProduct';
 import { PrivateRoutes, PublicRoutes } from './models';
 import AuthGuard from './guards/auth.guard';
 import Dashboard from './admin/Dashboard';
-import Modal from './admin/Modal';
+import { RoutesNotFound } from './utilities';
+import { SideBar } from './admin';
+
 
 function App() {
   
@@ -18,25 +20,22 @@ function App() {
   return (
     <>
     <BrowserRouter>
-      <Routes>
-
-            //Rutas publicas
-            {/* <Route path="/" element={<AuthLayout/>} /> */}
-            {/* si esta logeuado, va al private, si no esta logueado, lo mando al loguien */}
+      <RoutesNotFound>
+      
             <Route path='/' element={<Navigate to={PrivateRoutes.PRIVATE}/>} />
             <Route path={PublicRoutes.LOGIN} element={<Login/>} />
             <Route path="register" element={<Register/>} />
             <Route path="/products" element={<Products/>} />
-
-            //Rutas privadas. el * permite que todas pasen por el Guard
             <Route element={<AuthGuard/>} >
 
-                <Route path={`${PrivateRoutes.PRIVATE}/*`} element={<Modal/>} />
+                <Route path={`${PrivateRoutes.PRIVATE}/*`} element={<SideBar/>} />
+                <Route path={`${PrivateRoutes.CREATEPRODUCT}/*`} element={<CreateProduct/>} />
             </Route>
             {/* <Route path="forget-password" element={<ForgetPassword/>} />
             </Route>
              */}
-      </Routes>
+     
+      </RoutesNotFound>
     </BrowserRouter>
   </>
   )
