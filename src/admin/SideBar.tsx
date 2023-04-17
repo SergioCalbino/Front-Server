@@ -12,7 +12,7 @@ const SideBar = () => {
 
     return (
       <>
-        <div className="flex mt-20 ">
+        <div className="flex mt-20 fixed top-0 left-0 w-full   ">
             <div
                 className={` ${
                     open ? "w-40" : "w-60 "
@@ -23,7 +23,7 @@ const SideBar = () => {
                         <h2 className="text-xl font-bold text-white">
                             Dashboard
                         </h2>
-                        <button onClick={() => setShowComponent(!open)}>
+                        <button onClick={() => setOpen(!open)}>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 className="w-6 h-6 text-white"
@@ -70,7 +70,7 @@ const SideBar = () => {
                             className="w-full py-2 pl-10 text-sm rounded-md focus:outline-none"
                         />
                     </div>
-                    <div className="flex-1">
+                    <div className="flex-1" >
                         <ul className="pt-2 pb-4 space-y-1 text-sm">
                             <li className="rounded-sm">
                                 <button
@@ -198,10 +198,10 @@ const SideBar = () => {
                     </div>
                 </div>
             </div>
-            <div className="container mx-auto mt-5">
+            <div className="container mx-auto   ">
                 <div className="grid grid-cols-1 gap-6 mb-6 lg:grid-cols-3">
                     { showComponent ? <CreateProduct/> : ''}
-            </div>
+                </div>
         </div>
         </div>
 

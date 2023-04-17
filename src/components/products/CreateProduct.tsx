@@ -98,16 +98,12 @@ const CreateProduct = () => {
      
       return (
         <>
-          <div>
-            <h1 className="text-zinc-800 font-bold text-2xl mt-12 gap-10 p-5">
-              Crear <span className="text-red-600">Productos</span>
-            </h1>
-        </div>
+        
           
           
     
         
-            <div  className='mt-20 md:mt-5 shadow-lg px-5 py-10 rounded-xl bg-white'>
+            <div  className=' fixed mt-20 mb  md:mt-5   shadow-lg px-5 py-10 rounded-xl  bg-white'>
               <form onSubmit={handleSubmit} className="mr-8 md:ml-8">
               
               <div className="my-5">
@@ -191,6 +187,12 @@ const CreateProduct = () => {
               />
             </form>
             </div>
+
+            {/* <div>
+            <h1 className=" fixed -ml-3.5 text-zinc-800 font-bold text-2xl mt-12 gap-10 p-5">
+              Crear <span className="text-red-600">Productos</span>
+            </h1>
+        </div> */}
             </>
       )
 }
