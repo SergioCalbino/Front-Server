@@ -1,9 +1,18 @@
 import axios from 'axios';
 import React, { FormEvent, useEffect, useState } from 'react'
 import { InterCreateProduct } from '../../types/interfaces';
+import { useSelector } from 'react-redux';
+import { AppStore } from '../../redux/store';
+
+
+
 
 const CreateProduct = () => {
-    type changeEvent = React.ChangeEvent<HTMLInputElement>
+
+  const userId = useSelector((store : AppStore) => store)
+  console.log(userId.user.uid)
+
+    type changeEvent = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
     type submitEvent = FormEvent<HTMLFormElement>
     const token = localStorage.getItem('token')
 
@@ -18,7 +27,7 @@ const CreateProduct = () => {
     const objProduct: InterCreateProduct = {
         nombre: '',
         estado: true,
-        usuario: '',
+        usuario: userId.user.uid,
         precio: '',
         categoria: '',
         descripcion: '',
@@ -30,7 +39,8 @@ const CreateProduct = () => {
       const [reg, setReg] = useState(objProduct);
       const [alerta, setAlerta] = useState({error: false, msg: '', show: false});
 
-      const [categories, setCategories] = useState([])
+      const [categories, setCategories] = useState<{ _id: string | number, nombre: string }[]>([])
+
       
 
       //Me traigo las categorias
@@ -38,8 +48,9 @@ const CreateProduct = () => {
 
           const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/categorias`)
           setCategories(data.categorias)
-          console.log(categories)
-          console.log(data.categorias)
+          // console.log(categories)
+          // console.log(data.categorias)
+          
       }
 
       useEffect(  () => {
@@ -71,6 +82,7 @@ const CreateProduct = () => {
       const handleSubmit = (e:submitEvent) => {
         e.preventDefault();
     
+
         // const { nombre, correo, password, repPassword } = reg
     
         // if ([nombre,correo, password, repPassword].includes('')) {
@@ -99,11 +111,7 @@ const CreateProduct = () => {
       return (
         <>
         
-          
-          
-    
-        
-            <div  className=' fixed mt-20 mb  md:mt-5   shadow-lg px-5 py-10 rounded-xl  bg-white'>
+          <div  className='  mt-20 mb  md:mt-5   shadow-lg px-5 py-10 rounded-xl  bg-white'>
               <form onSubmit={handleSubmit} className="mr-8 md:ml-8">
               
               <div className="my-5">
@@ -138,14 +146,15 @@ const CreateProduct = () => {
 
               <div className="my-5">
                 <label className="uppercase text-gray-600 block text-xl font-bold">
-                Usuario
+               ID Usuario
                   <input
                     className="border w-full p-3 mt-3 bg-slate-200 rounded-xl "
                     type="text"
                     placeholder="Usuario"
                     name="usuario"
-                    // value={categories[0].usuario._id}
+                     value={reg.usuario}
                     onChange={handleChange}
+                    disabled
                   />
                 </label>
               </div>
@@ -155,7 +164,21 @@ const CreateProduct = () => {
                 descripcion
                   <textarea
                     className="border w-full p-3 mt-3 bg-slate-200 rounded-xl "
-                    type="text"
+                   
+                    placeholder="Descripcion del producto"
+                    name="descripcion"
+                    value={reg.descripcion}
+                    onChange={handleChange}
+                  />
+                </label>
+            
+              </div>
+              <div className="my-5">
+                <label className="uppercase text-gray-600 block text-xl font-bold">
+                descripcion
+                  <textarea
+                    className="border w-full p-3 mt-3 bg-slate-200 rounded-xl "
+                   
                     placeholder="Descripcion del producto"
                     name="descripcion"
                     value={reg.descripcion}
@@ -170,7 +193,7 @@ const CreateProduct = () => {
                   Elegir Categoria
                    <select id="select-example" name='categoria' value={reg.categoria} onChange={handleChange}>
                         <option value="">-- Selecciona una opción --</option>
-                        { categories && categories.map( categorie => (
+                        { categories && categories.map( (categorie) => (
                                 <option key={categorie._id} value={categorie._id} > {categorie.nombre} </option>
                             ))}
                         
