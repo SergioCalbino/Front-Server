@@ -9,7 +9,7 @@ const RoutesNotFound = ({ children } : Props) => {
   return (
     <Routes>
         {children}
-        <Route path='*' element={<div> Not Found </div>} />
+        <Route path='*' element={<div className='mt-16 text-red-800'  > Not Found </div>} />
     </Routes>
   )
 }
