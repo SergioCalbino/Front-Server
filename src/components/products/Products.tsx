@@ -60,7 +60,7 @@ const Products = () => {
           </div>
 
     <div className=' m-10 lg:flex lg:justify-between' >
-    <Link to='/sidebar' className=' lg:flex lg:justify-between md:w-auto w-full cursor-pointer rounded-x bg-blue-500 hover:bg-blue-600 rounded-xl mt-10 p-3 uppercase text-white'> 
+    <Link to='/admin' className=' lg:flex lg:justify-between md:w-auto w-full cursor-pointer rounded-x bg-blue-500 hover:bg-blue-600 rounded-xl mt-10 p-3 uppercase text-white'> 
       Crear Producto 
     </Link>
     </div>

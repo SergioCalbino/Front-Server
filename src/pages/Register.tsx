@@ -56,11 +56,7 @@ const Register = () => {
                   title: `el ${ err.response.data.errors[0].msg }`,
                   showConfirmButton: true,
                 }))
-              // setAlerta({
-              //   msg: err.response.data.msg,
-              //   error: true,
-              //   show: true
-              // }))
+              
     
   }
 

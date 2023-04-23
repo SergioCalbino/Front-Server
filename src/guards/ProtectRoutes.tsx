@@ -6,13 +6,13 @@ import { AppStore } from "../redux/store";
 const ProtectRoutes = () => {
 
     const adminUser = useSelector((store: AppStore) => store)
-
+  console.log(adminUser.user.rol)
   return (
     <>
     
 
         <Header/>
-            { adminUser.user.rol === 'ADMIN_ROLE' ? (
+            { adminUser.user.rol === "ADMIN_ROLE" ? (
                 <main className="container mx-auto mt-10" >
                 <Outlet /> 
 

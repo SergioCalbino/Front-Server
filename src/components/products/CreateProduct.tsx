@@ -1,9 +1,19 @@
 import axios from 'axios';
 import React, { FormEvent, useEffect, useState } from 'react'
-import { InterCreateProduct } from '../../types/interfaces';
+import { InterCreateProduct, InterObjAlerta } from '../../types/interfaces';
 import { useSelector } from 'react-redux';
 import { AppStore } from '../../redux/store';
+import Alert from '../../Alert';
 
+
+interface InterProductAlert {
+  nombre: boolean;
+  precio: boolean;
+  img?: boolean;
+  descripcion: boolean;
+  categoria: boolean;
+  show: boolean
+}
 
 
 
@@ -16,7 +26,7 @@ const CreateProduct = () => {
     type submitEvent = FormEvent<HTMLFormElement>
     const token = localStorage.getItem('token')
     // const token = userId.user.token
-    console.log(token)
+    // console.log(token)
 
 
     const config = {
@@ -30,17 +40,26 @@ const CreateProduct = () => {
         nombre: '',
         estado: true,
         usuario: userId.user.uid,
-        precio: '',
+        precio: 0,
         categoria: '',
         descripcion: '',
         disponible: true,
-        img: '#'
-    
-      }
-    
-      const [reg, setReg] = useState(objProduct);
-      const [alerta, setAlerta] = useState({error: false, msg: '', show: false});
+        img: ''
+  };
 
+    const initialAlerta: InterProductAlert = {
+      nombre: false,
+      precio: false,
+      img: false,
+      descripcion: false,
+      categoria: false,
+      show: false
+  };
+    
+
+      const [productState, setProductState] = useState(objProduct);
+      const [alerta, setAlerta] = useState({error: false, msg: '', show: false});
+      const [alertaCampos, setAlertaCampos] = useState(initialAlerta);
       const [categories, setCategories] = useState<{ _id: string | number, nombre: string }[]>([])
 
       
@@ -63,19 +82,12 @@ const CreateProduct = () => {
 
       
       const createProducto = async () => {
-        const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/productos`, reg, config)
+        const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/productos`, productState, config)
         console.log(data)
       }
-    
-
-    //   const handleCategorie = () => {
-    //       const categoriId = e.target.value
-    //       categoria: categoriId
-
-    //   }
 
       const handleChange = (e:changeEvent) => {
-        setReg({...reg,
+        setProductState({...productState,
           [e.target.name] : e.target.value,
         })
       };
@@ -85,26 +97,40 @@ const CreateProduct = () => {
         e.preventDefault();
     
 
-        // const { nombre, correo, password, repPassword } = reg
+        const { nombre, precio, descripcion, img, categoria } = productState
     
-        // if ([nombre,correo, password, repPassword].includes('')) {
-        //   setAlerta({msg: 'Hay campos vacios', error: true})
-        //   return
-        // };
-        
-        // if (password.length < 6) {
-        //   setAlerta({msg: 'La contraseña debe tener mas de 6 caracteres', error: true})
-        //   return
-        // }
-    
-        // if (password !== repPassword ) {
-        //   setAlerta({msg: 'Los password no son iguales', error: true})
-        //   return
+        if (!nombre) {
+          setAlerta({msg: 'El nombre es obligatorio', error: true, show: true})
+          setAlertaCampos((prevState) => ({ ...prevState, nombre: true }))  
+          setTimeout(() => setAlertaCampos({ ...alertaCampos, show: false }), 3000)
+        return
           
-        // }
+        }
+        
+        if (!precio || precio < 0) {
+          setAlerta({msg: 'El precio es boligatorio y debe ser mayor a cero', error: true, show: true})
+          setAlertaCampos((prevState) => ({ ...prevState, precio: true }))  
+          setTimeout(() => setAlertaCampos({ ...alertaCampos, show: false }), 3000)
+        return
+        }
+    
+        if (!descripcion ) {
+          setAlerta({msg: 'La descripcion del prodcuto es obligatoria', error: true, show: true})
+          setAlertaCampos((prevState) => ({ ...prevState, descripcion: true }))  
+          setTimeout(() => setAlertaCampos({ ...alertaCampos, show: false }), 3000)
+        return
+          
+        }
+        if (!categoria ) {
+          setAlerta({msg: 'Debe seleccionar una categoria', error: true, show: true})
+          setAlertaCampos((prevState) => ({ ...prevState, categoria: true }))  
+          setTimeout(() => setAlertaCampos({ ...alertaCampos, show: false }), 3000)
+        return
+          
+        }
     
         createProducto()
-        setReg(objProduct)
+        setProductState(objProduct)
     
     
       }
@@ -113,9 +139,13 @@ const CreateProduct = () => {
       return (
         <>
         
+            {alertaCampos.nombre && <Alert alerta={{ error: true, msg: 'El nombre es obligatorio' }} />}
+            {alertaCampos.precio && <Alert alerta={{ error: true, msg: 'Debes ingresar un precio' }} />}
+            {alertaCampos.descripcion && <Alert alerta={{ error: true, msg: 'La descripcion es obligatoria' }} />}
+            {alertaCampos.categoria && <Alert alerta={{ error: true, msg: 'Debes elegir una categoria' }} />}
+            {/* {alertaCampos.nombre && <Alert alerta={{ error: true, msg: 'El nombre es obligatorio' }} />} */}
           <div  className='  mt-20 mb  md:mt-5   shadow-lg px-5 py-10 rounded-xl  bg-white'>
               <form onSubmit={handleSubmit} className="mr-8 md:ml-8">
-              
               <div className="my-5">
                 <label className="uppercase text-gray-600 block text-xl font-bold">
                   Nombre
@@ -124,7 +154,7 @@ const CreateProduct = () => {
                     type="text"
                     placeholder="Nombre del producto"
                     name="nombre"
-                     value={reg.nombre}
+                     value={productState.nombre}
                     onChange={handleChange}
                   />
                 </label>
@@ -140,7 +170,7 @@ const CreateProduct = () => {
                     type="number"
                     placeholder="Precio"
                     name="precio"
-                    value={reg.precio}
+                    value={productState.precio}
                     onChange={handleChange}
                   />
                 </label>
@@ -154,9 +184,24 @@ const CreateProduct = () => {
                     type="text"
                     placeholder="Usuario"
                     name="usuario"
-                     value={reg.usuario}
+                     value={productState.usuario}
                     onChange={handleChange}
                     disabled
+                  />
+                </label>
+              </div>
+              
+              <div className="my-5">
+                <label className="uppercase text-gray-600 block text-xl font-bold">
+               Imagen
+                  <input
+                    className="border w-full p-3 mt-3 bg-slate-200 rounded-xl "
+                    type="text"
+                    placeholder="Imagen"
+                    name="img"
+                     value={productState.img}
+                    onChange={handleChange}
+                   
                   />
                 </label>
               </div>
@@ -169,21 +214,7 @@ const CreateProduct = () => {
                    
                     placeholder="Descripcion del producto"
                     name="descripcion"
-                    value={reg.descripcion}
-                    onChange={handleChange}
-                  />
-                </label>
-            
-              </div>
-              <div className="my-5">
-                <label className="uppercase text-gray-600 block text-xl font-bold">
-                descripcion
-                  <textarea
-                    className="border w-full p-3 mt-3 bg-slate-200 rounded-xl "
-                   
-                    placeholder="Descripcion del producto"
-                    name="descripcion"
-                    value={reg.descripcion}
+                    value={productState.descripcion}
                     onChange={handleChange}
                   />
                 </label>
@@ -193,7 +224,7 @@ const CreateProduct = () => {
               <div className="my-5">
                 <label className="uppercase text-gray-600 block text-xl font-bold">
                   Elegir Categoria
-                   <select id="select-example" name='categoria' value={reg.categoria} onChange={handleChange}>
+                   <select id="select-example" name='categoria' value={productState.categoria} onChange={handleChange}>
                         <option value="">-- Selecciona una opción --</option>
                         { categories && categories.map( (categorie) => (
                                 <option key={categorie._id} value={categorie._id} > {categorie.nombre} </option>

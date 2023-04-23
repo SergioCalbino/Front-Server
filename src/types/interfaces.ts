@@ -39,7 +39,7 @@ export interface  InterCreateProduct  {
     nombre: string,
     estado: boolean,
     usuario: string,
-    precio: string,
+    precio: number,
     categoria: string,
     descripcion: string,
     disponible: boolean,
