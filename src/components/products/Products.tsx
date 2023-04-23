@@ -5,9 +5,15 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { InterProducts } from '../../types/interfaces'
 import Product from './Product'
+import { useSelector } from 'react-redux'
+import { AppStore } from '../../redux/store'
+
 
 
 const Products = () => {
+
+  const userState = useSelector((store: AppStore) => store)
+    // console.log(userState)
 
     const productObj: InterProducts = {
         productos: [{
@@ -40,23 +46,21 @@ const Products = () => {
 
   return (
     <>
-    <div className='flex flex-wrap mt-24 bg-slate-100'>
-        
+    <div className="grid grid-cols-4 gap-x-4 gap-y-4 mt-32" >
   { 
   products && products.productos.map(product => (
-    <div className='w-full sm:w-1/2 md:w-1/3 xl:w-1/4 '>
             <Product 
                 key={product.nombre}
                 {...product}
             />
-        </div>
+  
+            ))
+            
+          }
+          </div>
 
-    ))
-
-    }
-    </div>
     <div className=' m-10 lg:flex lg:justify-between' >
-    <Link to='/private/sidebar' className=' lg:flex lg:justify-between md:w-auto w-full cursor-pointer rounded-x bg-blue-500 hover:bg-blue-600 rounded-xl mt-10 p-3 uppercase text-white'> 
+    <Link to='/sidebar' className=' lg:flex lg:justify-between md:w-auto w-full cursor-pointer rounded-x bg-blue-500 hover:bg-blue-600 rounded-xl mt-10 p-3 uppercase text-white'> 
       Crear Producto 
     </Link>
     </div>

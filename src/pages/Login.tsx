@@ -9,6 +9,7 @@ import Swal from "sweetalert2"
 import { useDispatch } from "react-redux";
 
 
+
 const Login = () => {
 
     type changeEvent = React.ChangeEvent<HTMLInputElement>
@@ -27,6 +28,7 @@ const Login = () => {
 			await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, {correo, password})
 			.then(res => {
 				dispatch(loginUser(res.data))
+				console.log(res.data.usuario)
 				localStorage.setItem('token', res.data.token)
 				Swal.fire({
 					position: 'center',
@@ -58,16 +60,16 @@ const Login = () => {
 
   return (
     <>
-		<div className="container mx-auto my-20 md:w-1/2 p-5 border-blue-700 rounded-lg" >
+		
         <div>
-          <h1  className="text-zinc-800 font-bold text-2xl mt-12 gap-10 p-5" >
+          <h1  className="text-zinc-800 font-bold text-2xl mt-12  " >
             Inicia Sesion y <span className="text-red-600" >Administra tus productos</span>
           </h1>
-        </div>
+       
         
 		{alerta.error && <Alert alerta={{ error: true, msg: 'Ocurrió un error al iniciar sesión' }} />}
 
-        <div  className='mt-20 md:mt-5 shadow-lg px-5 py-10 rounded-xl bg-white'>
+        <div  className=' mx-auto mt-20 w-96 md:mt-5 shadow-lg px-5 py-10 rounded-xl bg-white'>
                 <form onSubmit={handleSubmit} className="mr-8 md:ml-8">
 				<div className="my-5" >
 					<label 

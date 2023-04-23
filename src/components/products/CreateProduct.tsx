@@ -10,11 +10,13 @@ import { AppStore } from '../../redux/store';
 const CreateProduct = () => {
 
   const userId = useSelector((store : AppStore) => store)
-  console.log(userId.user.uid)
+  // console.log(userId.user.uid)
 
     type changeEvent = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
     type submitEvent = FormEvent<HTMLFormElement>
     const token = localStorage.getItem('token')
+    // const token = userId.user.token
+    console.log(token)
 
 
     const config = {

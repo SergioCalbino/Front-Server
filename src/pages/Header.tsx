@@ -1,12 +1,23 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { UserKey, resetUser } from "../redux/states/user";
+import { useDispatch } from "react-redux";
+import { clearLocalStorage } from "../utilities";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleMenu = () => {
+
+ const dispatch = useDispatch()
+  
+ const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  const logout = () => {
+    dispatch(resetUser())
+   
+  }
 
   return (
     <>
@@ -41,12 +52,11 @@ function Header() {
         } w-full block flex-grow lg:flex lg:items-center lg:w-auto`}
       >
         <div className=" flex justify-center text-sm lg:flex-grow lg:items ">
-          <a
-            href="#docs"
+          {/* <Link to="sidebar"
             className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
           >
             Docs
-          </a>
+          </Link> */}
           <a
             href="#examples"
             className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
@@ -61,12 +71,12 @@ function Header() {
           </a>
         </div>
         <div>
-          <a
-            href="#download"
+          <button
+            // onClick={logout}
             className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
           >
-            Download
-          </a>
+            Cerra Sesion
+          </button>
         </div>
       </div>
         

@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { UserInfo } from "../../models";
 import { userInfo } from "os";
+import { clearLocalStorage, persistLocalStorage } from "../../utilities";
+
 
 
 export const EmptyUserState: UserInfo = {
@@ -16,12 +18,9 @@ export const EmptyUserState: UserInfo = {
 }
 
 //Esto lo hacmos para hacer persistente los datos del usuario
-export const persistLocalStorageUser = (userInfo: UserInfo) => {
-    localStorage.setItem('user', JSON.stringify({ ...userInfo  }))
-}
-export const clearLocalStorage = () => {
-    localStorage.removeItem('user')
-}
+
+
+export const UserKey = 'user'
 
 export const userSlice = createSlice({
     name: 'user',
@@ -29,7 +28,7 @@ export const userSlice = createSlice({
     
     reducers: {
         loginUser: (state, action ) => {
-            return persistLocalStorageUser ({
+            return persistLocalStorage<UserInfo> (UserKey, {
                 uid: action.payload.usuario.uid,
                 nombre: action.payload.usuario.nombre,
                 correo: action.payload.usuario.correo,
@@ -42,13 +41,13 @@ export const userSlice = createSlice({
             })
         },
         createUser: (state, action) => {
-            return persistLocalStorageUser(action.payload)
+            return persistLocalStorage<UserInfo>(UserKey, action.payload)
         },
         updateUser: (state, action) => {
-            return persistLocalStorageUser({ ...state, ...action.payload })
+            return persistLocalStorage<UserInfo>(UserKey,{ ...state, ...action.payload })
         },
         resetUser: () => {
-            clearLocalStorage()
+            clearLocalStorage(UserKey)
             return EmptyUserState
         }
     }

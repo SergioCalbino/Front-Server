@@ -119,12 +119,12 @@ const Register = () => {
 
   return (
     <>
-      <div className="container mx-auto my-20 md:w-1/2 p-5 border-blue-700 rounded-lg" >
+      
       <div>
         <h1 className="text-zinc-800 font-bold text-2xl mt-12 gap-10 p-5">
           Registrate <span className="text-red-600">Llenando el formulario</span>
         </h1>
-    </div>
+   
       
       
 

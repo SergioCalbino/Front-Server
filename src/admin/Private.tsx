@@ -4,18 +4,18 @@ import Modal from "./SideBar";
 import { RoutesNotFound } from "../utilities";
 import { Navigate, Route } from "react-router-dom";
 import { PrivateRoutes } from "../models";
+import SideBar from "./SideBar";
+import CreateProduct from "../components/products/CreateProduct";
 // import CreateProduct from "../components/products/CreateProduct";
 
-const SideBar = lazy(() => import('./SideBar'))
-const CreateProduct = lazy(() => import('../components/products/CreateProduct'))
+// const SideBar = lazy(() => import('./SideBar'))
+// const CreateProduct = lazy(() => import('../components/products/CreateProduct'))
 
 function Private() {
   return (
     <div>
       <RoutesNotFound>
-          <Route path='/' element={<Navigate to={PrivateRoutes.SIDEBAR}/>} />
-          <Route path={`${PrivateRoutes.SIDEBAR}/*`} element={<SideBar/>} />
-          <Route path={`${PrivateRoutes.CREATEPRODUCT}/*`} element={<CreateProduct/>} />
+          <Route path='/' element={<SideBar/>} />
       </RoutesNotFound>
     </div>
   );
