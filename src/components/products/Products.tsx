@@ -46,24 +46,19 @@ const Products = () => {
 
   return (
     <>
-    <div className="grid grid-cols-4 gap-x-4 gap-y-4 mt-32" >
-  { 
-  products && products.productos.map(product => (
-            <Product 
-                key={product.nombre}
-                {...product}
-            />
-  
-            ))
-            
-          }
-          </div>
+<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-4 mt-32">
+  {products &&
+    products.productos.map((product) => (
+      <Product key={product.nombre} {...product} />
+    ))}
+</div>
 
-    <div className=' m-10 lg:flex lg:justify-between' >
-    <Link to='/admin' className=' lg:flex lg:justify-between md:w-auto w-full cursor-pointer rounded-x bg-blue-500 hover:bg-blue-600 rounded-xl mt-10 p-3 uppercase text-white'> 
-      Crear Producto 
-    </Link>
-    </div>
+    <div className='m-10 lg:flex lg:justify-between'>
+  <Link to='/admin' className='lg:flex lg:justify-between lg:mt-11 md:w-auto w-full cursor-pointer rounded-x bg-blue-500 hover:bg-blue-600 rounded-xl mt-10 md:mt-6 sm:mt-6 p-3 uppercase text-white'>
+    Perfil Admin
+  </Link>
+</div>
+    
     </>
   )
 }

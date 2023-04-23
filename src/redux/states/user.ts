@@ -47,7 +47,7 @@ export const userSlice = createSlice({
             return persistLocalStorage<UserInfo>(UserKey,{ ...state, ...action.payload })
         },
         resetUser: () => {
-            clearLocalStorage(UserKey)
+            
             return EmptyUserState
         }
     }

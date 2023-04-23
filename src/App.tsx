@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux';
 import { AppStore } from './redux/store';
 import AuthLayout from './layout/AuthLayout';
 import ProtectRoutes from './guards/ProtectRoutes';
+import Header from './pages/Header';
 // import Private from './admin/Private';
 
 const Login = lazy(() => import('./pages/Login'))
@@ -27,6 +28,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
+      <Header/>
         <Routes>
           <Route path='/' element={<AuthLayout/>} > 
                 <Route index element={<Login/>} />
