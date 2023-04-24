@@ -3,12 +3,14 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import CreateProduct from '../components/products/CreateProduct';
+import Users from '../components/users/Users';
 
 const SideBar = () => {
   
    const [open, setOpen] = useState(false)
 
    const [showComponent, setShowComponent] = useState(false)
+   const [showUsers, setShowUsers] = useState(false)
 
    const handleHidden = () => {
       setShowComponent(true)
@@ -33,7 +35,8 @@ const SideBar = () => {
            </button>
            <div className='text-center text-white text-xl hover:bg-orange-400 cursor-pointer py-3 mb-2'> <button onClick={handleHidden} > Create Product
             </button> </div>
-           <div className='text-center text-white text-xl hover:bg-orange-400 cursor-pointer py-3 mb-2'>Link 2</div>
+           <div className='text-center text-white text-xl hover:bg-orange-400 cursor-pointer py-3 mb-2'><button onClick={()=> setShowUsers(true)} > Show Users
+            </button></div>
            <div className='text-center text-white text-xl hover:bg-orange-400 cursor-pointer py-3 mb-2'>Link 3</div>
            <div className='text-center text-white text-xl hover:bg-orange-400 cursor-pointer py-3 mb-2'>Link 4</div>
            <div className='text-center text-white text-xl hover:bg-orange-400 cursor-pointer py-3 mb-2'>Link 5</div>
@@ -46,9 +49,11 @@ const SideBar = () => {
       
       {
          showComponent ? <CreateProduct/> : ''
-
-      }
+        }
      
+        {
+          showUsers ? <Users/> : ''
+        }
       
    </div>
 </div>

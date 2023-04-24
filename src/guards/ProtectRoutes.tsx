@@ -6,7 +6,7 @@ import { AppStore } from "../redux/store";
 const ProtectRoutes = () => {
 
     const adminUser = useSelector((store: AppStore) => store)
-  console.log(adminUser.user.rol)
+
   return (
     <>
     
