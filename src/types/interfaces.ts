@@ -46,3 +46,18 @@ export interface  InterCreateProduct  {
     img: string
 
   }
+
+  // Interface de usuario
+
+  export interface IUser {
+    total?: number | null | undefined;
+    usuarios: {
+        nombre: string;
+        correo: string;
+        google: boolean;
+        estado: boolean;
+        rol: string;
+        uid: string;
+
+    }[]
+}
