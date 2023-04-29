@@ -16,6 +16,7 @@ import AuthLayout from './layout/AuthLayout';
 import ProtectRoutes from './guards/ProtectRoutes';
 import Header from './pages/Header';
 import Users from './components/users/Users';
+import EditUser from './components/users/EditUser';
 // import Private from './admin/Private';
 
 const Login = lazy(() => import('./pages/Login'))
@@ -41,6 +42,7 @@ function App() {
                     <Route index element={<SideBar/>} />
                     <Route path='create-product' element={<CreateProduct/>}/>
                     <Route path='users' element={<Users/>}/>
+                    <Route path='edit/:id' element={<EditUser/>}/>
           </Route>
 
         </Routes>

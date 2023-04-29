@@ -7,6 +7,7 @@ import { loginUser } from "../redux/states/user";
 // import Alert from "../Alert"
 import Swal from "sweetalert2"
 import { useDispatch } from "react-redux";
+import useAuthStore from "../hooks/useAuthStore";
 
 
 
@@ -17,7 +18,7 @@ const Login = () => {
 
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
-	
+	const { StartLogin } = useAuthStore()
 	const [correo, setCorreo] = useState<string | undefined>('')
 	const [password, setPassword] = useState<string | undefined>('')
 	const [alerta, setAlerta] = useState({error: false, msg: ''})
@@ -25,24 +26,25 @@ const Login = () => {
 	
 	const login = async() => {
 
-			await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, {correo, password})
-			.then(res => {
-				dispatch(loginUser(res.data))
-				console.log(res.data.usuario)
-				localStorage.setItem('token', res.data.token)
-				Swal.fire({
-					position: 'center',
-					icon: 'success',
-					title: `Bienvenido ${res.data.usuario.nombre}`,
-					showConfirmButton: true,
-				})
-				navigate('/products')
-			})
-			.catch(err => 
-			setAlerta({
-				msg: err.response.data.msg,
-				error: true
-			}))
+		StartLogin( correo, password )
+			// await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, {correo, password})
+			// .then(res => {
+			// 	dispatch(loginUser(res.data))
+			// 	console.log(res.data.usuario)
+			// 	localStorage.setItem('token', res.data.token)
+			// 	Swal.fire({
+			// 		position: 'center',
+			// 		icon: 'success',
+			// 		title: `Bienvenido ${res.data.usuario.nombre}`,
+			// 		showConfirmButton: true,
+			// 	})
+			// 	navigate('/products')
+			// })
+			// .catch(err => 
+			// setAlerta({
+			// 	msg: err.response.data.msg,
+			// 	error: true
+			// }))
 	}
 
 	const handleSubmit = (e:submitEvent) => {

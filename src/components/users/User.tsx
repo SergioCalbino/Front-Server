@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 
 interface IUserProps {
@@ -29,6 +30,8 @@ const User = ( user:IUserProps ) => {
             <th className="px-4 py-3">Usuario Google</th>
             <th className="px-4 py-3">Estado</th>
             <th className="px-4 py-3">Rol</th>
+            <th className="px-4 py-3"><Link to={`edit/${uid}`}>Editar</Link ></th>
+            <th className="px-4 py-3">Eliminar</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-700">
@@ -39,6 +42,7 @@ const User = ( user:IUserProps ) => {
             <td className="px-4 py-3">{seeGoogle}</td>
             <td className="px-4 py-3">{seeState}</td>
             <td className="px-4 py-3">{rol}</td>
+            
           </tr>
           
         </tbody>

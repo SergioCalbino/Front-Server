@@ -1,21 +1,34 @@
 
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import CreateProduct from '../components/products/CreateProduct';
 import Users from '../components/users/Users';
 
 const SideBar = () => {
+
+  useEffect(() => {
+    setOpen(true)
+  }, [])
+  
   
    const [open, setOpen] = useState(false)
 
-   const [showComponent, setShowComponent] = useState(false)
+   const [showCreateProduct, setShowCreateProduct] = useState(false)
    const [showUsers, setShowUsers] = useState(false)
 
-   const handleHidden = () => {
-      setShowComponent(true)
+   const handleProduct = () => {
+      setShowCreateProduct(true)
+      setShowUsers(false)
       setOpen(false)
-   }
+   };
+
+   const handleUsers = () => {
+      setShowUsers(true)
+      setShowCreateProduct(false)
+      setOpen(false)
+   };
+   
 
    return (
       <>
@@ -33,9 +46,9 @@ const SideBar = () => {
                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
              </svg>
            </button>
-           <div className='text-center text-white text-xl hover:bg-orange-400 cursor-pointer py-3 mb-2'> <button onClick={handleHidden} > Create Product
+           <div className='text-center text-white text-xl hover:bg-orange-400 cursor-pointer py-3 mb-2'> <button onClick={handleProduct} > Create Product
             </button> </div>
-           <div className='text-center text-white text-xl hover:bg-orange-400 cursor-pointer py-3 mb-2'><button onClick={()=> setShowUsers(true)} > Show Users
+           <div className='text-center text-white text-xl hover:bg-orange-400 cursor-pointer py-3 mb-2'><button onClick={handleUsers} > Show Users
             </button></div>
            <div className='text-center text-white text-xl hover:bg-orange-400 cursor-pointer py-3 mb-2'>Link 3</div>
            <div className='text-center text-white text-xl hover:bg-orange-400 cursor-pointer py-3 mb-2'>Link 4</div>
@@ -48,7 +61,7 @@ const SideBar = () => {
    <div className="p-4">
       
       {
-         showComponent ? <CreateProduct/> : ''
+         showCreateProduct ? <CreateProduct/> : ''
         }
      
         {

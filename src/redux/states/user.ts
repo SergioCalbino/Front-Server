@@ -28,17 +28,7 @@ export const userSlice = createSlice({
     
     reducers: {
         loginUser: (state, action ) => {
-            return {
-                uid: action.payload.usuario.uid,
-                nombre: action.payload.usuario.nombre,
-                correo: action.payload.usuario.correo,
-                password: '',
-                img: '',
-                rol: action.payload.usuario.rol,
-                estado: true,
-                google: true,
-                token: action.payload.token
-            }
+            return action.payload
         },
         createUser: (state, action) => {
             return persistLocalStorage<UserInfo>(UserKey, action.payload)
