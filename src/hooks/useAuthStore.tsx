@@ -5,17 +5,17 @@ import { useSelector } from 'react-redux'
 import { loginUser } from '../redux/states/user'
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
+import { InterObjUser } from '../types/interfaces'
 
 const useAuthStore = () => {
-	const [alerta, setAlerta] = useState({error: false, msg: ''})
+	const [alerta, setAlerta] = useState({ error: false, msg: '' })
 
 
-    // const {  }  = useSelector(store => store)
-   const dispatch = useDispatch();
-   const navigate = useNavigate()
+	const dispatch = useDispatch();
+	const navigate = useNavigate()
 
-   const StartLogin = async (  correo : string | undefined , password: string | undefined ) => {
-    await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, {correo, password})
+	const StartLogin = async (correo: string | undefined, password: string | undefined) => {
+		await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, { correo, password })
 			.then(res => {
 				dispatch(loginUser({
 					uid: res.data.usuario.uid,
@@ -26,8 +26,8 @@ const useAuthStore = () => {
 					rol: res.data.usuario.rol,
 					estado: true,
 					google: true,
-					token: res.data.token}))
-				// console.log(res.data.usuario)
+					token: res.data.token
+				}))
 				localStorage.setItem('token', res.data.token)
 				Swal.fire({
 					position: 'center',
@@ -37,16 +37,39 @@ const useAuthStore = () => {
 				})
 				navigate('/products')
 			})
-			.catch(err => 
-			setAlerta({
-				msg: err.response.data.msg,
-				error: true
-			}))
-   }
+			.catch(err =>
+				setAlerta({
+					msg: err.response.data.msg,
+					error: true
+				}))
+	};
 
-  return {
-    StartLogin
-  }
+	const onRegister = async(reg: InterObjUser) => {
+		await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/usuarios`, reg)
+		.then(res => {
+		  localStorage.setItem('token', res.data.token)
+		  Swal.fire({
+			position: 'center',
+			icon: 'success',
+			title: `Gracias por registrate en nuesto sitio`,
+			showConfirmButton: true,
+		  })
+		  navigate('/products')
+		})
+		.catch(err => 
+		  Swal.fire({
+			position: 'center',
+			icon: 'error',
+			title: `el ${ err.response.data.errors[0].msg }`,
+			showConfirmButton: true,
+		  }))
+		
+	}
+
+	return {
+		StartLogin,
+		onRegister
+	}
 }
 
 export default useAuthStore

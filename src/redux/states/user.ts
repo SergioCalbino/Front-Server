@@ -31,10 +31,10 @@ export const userSlice = createSlice({
             return action.payload
         },
         createUser: (state, action) => {
-            return persistLocalStorage<UserInfo>(UserKey, action.payload)
+            return action.payload
         },
         updateUser: (state, action) => {
-            return persistLocalStorage<UserInfo>(UserKey,{ ...state, ...action.payload })
+            return { ...state, ...action.payload }
         },
         resetUser: () => {
             

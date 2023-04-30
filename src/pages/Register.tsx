@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Alert from '../Alert'
 import Swal from "sweetalert2";
 import { InterObjAlerta, InterObjUser } from "../types/interfaces";
+import useAuthStore from "../hooks/useAuthStore";
 
 
 
@@ -33,30 +34,13 @@ const Register = () => {
   const [reg, setReg] = useState(objUser);
   const [alerta, setAlerta] = useState({error: false, msg: '', show: false});
   const [alertaCampos, setAlertaCampos] = useState(initialAlerta);
-	const navigate = useNavigate()
+	const { onRegister } = useAuthStore()
 
 
   
   const register = async () => {
-    await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/usuarios`, reg)
-              .then(res => {
-                localStorage.setItem('token', res.data.token)
-                Swal.fire({
-                  position: 'center',
-                  icon: 'success',
-                  title: `Gracias por registrate en nuesto sitio`,
-                  showConfirmButton: true,
-                })
-                navigate('/products')
-              })
-              .catch(err => 
-                Swal.fire({
-                  position: 'center',
-                  icon: 'error',
-                  title: `el ${ err.response.data.errors[0].msg }`,
-                  showConfirmButton: true,
-                }))
-              
+    onRegister(reg)
+   
     
   }
 

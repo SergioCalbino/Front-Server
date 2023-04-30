@@ -27,7 +27,7 @@ const Users = () => {
 
     const getUsers = async () => {
         const {data} = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/usuarios`)
-        console.log(data)
+        // console.log(data)
         setUserApi(data)
        
 

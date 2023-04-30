@@ -16,8 +16,6 @@ const Login = () => {
     type changeEvent = React.ChangeEvent<HTMLInputElement>
     type submitEvent = FormEvent<HTMLFormElement>
 
-	const navigate = useNavigate()
-	const dispatch = useDispatch()
 	const { StartLogin } = useAuthStore()
 	const [correo, setCorreo] = useState<string | undefined>('')
 	const [password, setPassword] = useState<string | undefined>('')
