@@ -77,9 +77,10 @@ type submitEvent = FormEvent<HTMLFormElement>
       });
     };
 
-    const handleSubmit = (e:submitEvent) => {
+    const handleSubmit = async (e:submitEvent) => {
       e.preventDefault()
-      // const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/usuarios`, editUser)
+      const { data } = await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/api/usuarios/${id}`, editUser)
+      console.log(data)
     }
     
 
