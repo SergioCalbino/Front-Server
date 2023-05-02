@@ -25,24 +25,6 @@ const Login = () => {
 	const login = async() => {
 
 		StartLogin( correo, password )
-			// await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, {correo, password})
-			// .then(res => {
-			// 	dispatch(loginUser(res.data))
-			// 	console.log(res.data.usuario)
-			// 	localStorage.setItem('token', res.data.token)
-			// 	Swal.fire({
-			// 		position: 'center',
-			// 		icon: 'success',
-			// 		title: `Bienvenido ${res.data.usuario.nombre}`,
-			// 		showConfirmButton: true,
-			// 	})
-			// 	navigate('/products')
-			// })
-			// .catch(err => 
-			// setAlerta({
-			// 	msg: err.response.data.msg,
-			// 	error: true
-			// }))
 	}
 
 	const handleSubmit = (e:submitEvent) => {
