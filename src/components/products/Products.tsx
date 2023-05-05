@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react'
 
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-import { InterProducts } from '../../types/interfaces'
+
 import Product from './Product'
 import { useSelector } from 'react-redux'
 import { AppStore } from '../../redux/store'
+import { InterProducts } from './interface.product'
 
 
 

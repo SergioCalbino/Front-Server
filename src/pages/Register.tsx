@@ -3,8 +3,10 @@ import { ChangeEvent, useState, FormEvent  } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Alert from '../Alert'
 import Swal from "sweetalert2";
-import { InterObjAlerta, InterObjUser } from "../types/interfaces";
+import { InterObjAlerta } from "../types/interfaces";
 import useAuthStore from "../hooks/useAuthStore";
+import { InterObjUser } from "../components/users";
+
 
 
 

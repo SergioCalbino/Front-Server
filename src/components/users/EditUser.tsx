@@ -1,19 +1,13 @@
 import axios from 'axios';
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { InterObjAlerta } from '../../types/interfaces';
 import Alert from '../../Alert';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { IEditUser } from './interface.user';
 
-interface IEditUser {
-  correo: string;
-  estado: boolean;
-  google: boolean;
-  nombre: string;
-  rol: string
-  uid: string
-};
+
 
 interface IEditAlert {
   estado: boolean;
@@ -47,7 +41,7 @@ const EditUser = () => {
 
   const nombreRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(?:\s[a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$/;
 
-
+  const navigate = useNavigate()
   
 
     const [editUser, setEditUser] = useState(initialUser);
@@ -106,6 +100,8 @@ const EditUser = () => {
       if (shouldSave) {
         await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/api/usuarios/${id}`, editUser)
         Swal.fire('Saved!', 'Changes were saved successfully', 'success')
+        navigate('/admin')
+      
       } else {
         Swal.fire('Changes were not saved', '', 'info')
       }
@@ -228,7 +224,7 @@ const EditUser = () => {
         <nav className="mt-10 lg:flex lg:justify-between ">
           <Link
             className="block text-center my-5 text-gray-500"
-            to={"side-bar"}
+            to={"admin"}
           >
             {" "}
             Volver al Panel de Admin{" "}

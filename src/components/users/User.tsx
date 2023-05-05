@@ -1,4 +1,5 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 
 
@@ -13,10 +14,29 @@ interface IUserProps {
 
 const User = ( user:IUserProps ) => {
 
+  const token = localStorage.getItem('token')
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-token': token, // Aquí se pasa el token en los encabezados
+    },
+  };
+
+  const [deleteUser, setDeleteUser] = useState();
+
+  type event = React.MouseEvent<HTMLButtonElement>
   const { nombre, correo, google, estado, rol, uid} = user
 
   const seeGoogle = google === true ? 'true' : false;
   const seeState = estado === true ? 'true' : false;
+
+  
+  
+  
+  
+  
+  
 
   return (
     <div className="flex flex-col">
@@ -31,7 +51,7 @@ const User = ( user:IUserProps ) => {
             <th className="px-4 py-3">Estado</th>
             <th className="px-4 py-3">Rol</th>
             <th className="px-4 py-3"><Link to={`edit/${uid}`}>Editar</Link ></th>
-            <th className="px-4 py-3">Eliminar</th>
+            <th className="px-4 py-3"> <button  >Eliminar</button> </th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-700">

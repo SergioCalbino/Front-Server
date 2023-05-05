@@ -5,12 +5,19 @@ import { useSelector } from 'react-redux'
 import { loginUser } from '../redux/states/user'
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
-import { InterObjUser } from '../types/interfaces'
+import { InterObjUser } from '../components/users'
+
 
 const useAuthStore = () => {
 	const [alerta, setAlerta] = useState({ error: false, msg: '' })
-
-
+	
+	const token = localStorage.getItem('token')
+	const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          'x-token': token, // Aquí se pasa el token en los encabezados
+        },
+      };
 	const dispatch = useDispatch();
 	const navigate = useNavigate()
 
@@ -64,11 +71,16 @@ const useAuthStore = () => {
 			showConfirmButton: true,
 		  }))
 		
+	};
+
+	const onDelete = async (id: string) => {
+		await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/usuarios/${id}`,config)
 	}
 
 	return {
 		StartLogin,
-		onRegister
+		onRegister,
+		onDelete
 	}
 }
 

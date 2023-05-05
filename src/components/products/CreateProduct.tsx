@@ -1,9 +1,10 @@
 import axios from 'axios';
 import React, { FormEvent, useEffect, useState } from 'react'
-import { InterCreateProduct, InterObjAlerta } from '../../types/interfaces';
+import { InterObjAlerta } from '../../types/interfaces';
 import { useSelector } from 'react-redux';
 import { AppStore } from '../../redux/store';
 import Alert from '../../Alert';
+import { InterCreateProduct } from './interface.product';
 
 
 interface InterProductAlert {

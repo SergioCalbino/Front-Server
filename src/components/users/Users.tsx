@@ -1,7 +1,8 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import User from './User'
-import { IUser } from '../../types/interfaces'
+import { IUser } from './interface.user'
+
 
 
 

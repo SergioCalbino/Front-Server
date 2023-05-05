@@ -1,12 +1,5 @@
 
-//Interface para register
-export interface InterObjUser {
-    nombre: string;
-    correo: string;
-    password: string;
-    repPassword: string;
-    rol:'USER_ROLE'
-}
+
 
 export interface InterObjAlerta  {
     mailVacio: boolean;
@@ -16,48 +9,6 @@ export interface InterObjAlerta  {
     show: boolean
 }
 
-//Interface para Products
 
-export interface InterProducts {
-    productos: {
-    categoria: {
-        nombre: string,
-        _id: string,
-    },
-    disponible: boolean,
-    img: string,
-    nombre: string,
-    precio: string,
-    usuario: string,
-    _id: string
-    }[]
-}
 
-//Crear Producto
 
-export interface  InterCreateProduct  {
-    nombre: string,
-    estado: boolean,
-    usuario: string,
-    precio: number,
-    categoria: string,
-    descripcion: string,
-    disponible: boolean,
-    img: string
-
-  }
-
-  // Interface de usuario
-
-  export interface IUser {
-    total?: number | null | undefined;
-    usuarios: {
-        nombre: string;
-        correo: string;
-        google: boolean;
-        estado: boolean;
-        rol: string;
-        uid: string;
-
-    }[]
-}
