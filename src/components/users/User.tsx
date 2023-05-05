@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import useAuthStore from '../../hooks/useAuthStore';
 
 
 interface IUserProps {
@@ -13,7 +14,8 @@ interface IUserProps {
 }
 
 const User = ( user:IUserProps ) => {
-
+  
+  const  { onDelete } = useAuthStore()
   const token = localStorage.getItem('token')
 
   const config = {
@@ -31,6 +33,13 @@ const User = ( user:IUserProps ) => {
   const seeGoogle = google === true ? 'true' : false;
   const seeState = estado === true ? 'true' : false;
 
+  
+  
+  const handleDelete =  (user: IUserProps) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
+    
+    onDelete(user.uid)
+
+  };
   
   
   
@@ -51,7 +60,7 @@ const User = ( user:IUserProps ) => {
             <th className="px-4 py-3">Estado</th>
             <th className="px-4 py-3">Rol</th>
             <th className="px-4 py-3"><Link to={`edit/${uid}`}>Editar</Link ></th>
-            <th className="px-4 py-3"> <button  >Eliminar</button> </th>
+            <th className="px-4 py-3"> <button onClick={handleDelete(user)} >Eliminar</button> </th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-700">

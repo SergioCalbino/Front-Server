@@ -37,7 +37,7 @@ const Users = () => {
     useEffect(() => {
         getUsers()
       
-    }, [])
+    }, [userApi])
     
 
   return (

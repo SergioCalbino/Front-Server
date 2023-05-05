@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
-import { loginUser } from '../redux/states/user'
+import user, { deleteUser, loginUser } from '../redux/states/user'
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
 import { InterObjUser } from '../components/users'
@@ -73,9 +73,17 @@ const useAuthStore = () => {
 		
 	};
 
-	const onDelete = async (id: string) => {
+	const onDelete = async (id:string) => {
+		console.log(id)
 		await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/usuarios/${id}`,config)
-	}
+		.then(res => {
+			dispatch(deleteUser(res.data))
+			navigate('/admin')
+		})
+		.catch(err => console.log(err))
+	};
+
+	
 
 	return {
 		StartLogin,
