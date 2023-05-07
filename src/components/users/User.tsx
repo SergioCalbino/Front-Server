@@ -16,16 +16,6 @@ interface IUserProps {
 const User = ( user:IUserProps ) => {
   
   const  { onDelete } = useAuthStore()
-  const token = localStorage.getItem('token')
-
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-      'x-token': token, // Aquí se pasa el token en los encabezados
-    },
-  };
-
-  const [deleteUser, setDeleteUser] = useState();
 
   type event = React.MouseEvent<HTMLButtonElement>
   const { nombre, correo, google, estado, rol, uid} = user
@@ -41,12 +31,6 @@ const User = ( user:IUserProps ) => {
 
   };
   
-  
-  
-  
-  
-  
-
   return (
     <div className="flex flex-col">
     <div className="bg-slate-50 shadow-lg rounded-lg overflow-x-auto">

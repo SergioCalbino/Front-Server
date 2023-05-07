@@ -1,11 +1,10 @@
 import axios from 'axios';
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { InterObjAlerta } from '../../types/interfaces';
 import Alert from '../../Alert';
 import { Link } from 'react-router-dom';
-import Swal from 'sweetalert2';
 import { IEditUser } from './interface.user';
+import useAuthStore from '../../hooks/useAuthStore';
 
 
 
@@ -38,12 +37,11 @@ const EditUser = () => {
 
   type changeEvent = React.ChangeEvent<HTMLInputElement | HTMLSelectElement >
   type submitEvent = FormEvent<HTMLFormElement>
+  type idUser = string
 
   const nombreRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(?:\s[a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$/;
-
-  const navigate = useNavigate()
   
-
+    const { onEditUser } = useAuthStore()
     const [editUser, setEditUser] = useState(initialUser);
     const [alerta, setAlerta] = useState({error: false, msg: '', show: false});
     const [alertaCampos, setAlertaCampos] = useState(initialAlerta);
@@ -87,24 +85,8 @@ const EditUser = () => {
     };
 
     const editUserOk = async () => {
-      const shouldSave = await Swal.fire({
-        title: 'Do you want to save the changes?',
-        showDenyButton: true,
-        showCancelButton: true,
-        confirmButtonText: 'Save',
-        denyButtonText: `Don't save`,
-      }).then((result) => {
-        return result.isConfirmed
-      })
-    
-      if (shouldSave) {
-        await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/api/usuarios/${id}`, editUser)
-        Swal.fire('Saved!', 'Changes were saved successfully', 'success')
-        navigate('/admin')
       
-      } else {
-        Swal.fire('Changes were not saved', '', 'info')
-      }
+      onEditUser(id, editUser)
 
     }
     

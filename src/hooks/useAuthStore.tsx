@@ -2,10 +2,10 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
-import user, { deleteUser, loginUser } from '../redux/states/user'
+import user, { deleteUser, loginUser, updateUser } from '../redux/states/user'
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
-import { InterObjUser } from '../components/users'
+import { IEditUser, InterObjUser } from '../components/users'
 
 
 const useAuthStore = () => {
@@ -75,20 +75,63 @@ const useAuthStore = () => {
 
 	const onDelete = async (id:string) => {
 		console.log(id)
-		await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/usuarios/${id}`,config)
-		.then(res => {
-			dispatch(deleteUser(res.data))
-			navigate('/admin')
-		})
-		.catch(err => console.log(err))
+		const shouldDelete = await Swal.fire({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!'
+		  }).then((result) => {
+			return result.isConfirmed
+		  })
+		
+		  if (shouldDelete) {
+			  await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/usuarios/${id}`,config)
+				.then(res => {
+				dispatch(deleteUser(res.data))
+				navigate('/admin')
+			})
+			.catch(err => console.log(err))
+			
+		  } else {
+			Swal.fire('User were not eliminate', '', 'info')
+		  }
 	};
+
+	const onEditUser = async (id: string | undefined, editUser: IEditUser) => {
+		const shouldSave = await Swal.fire({
+			title: 'Do you want to save the changes?',
+			showDenyButton: true,
+			showCancelButton: true,
+			confirmButtonText: 'Save',
+			denyButtonText: `Don't save`,
+		  }).then((result) => {
+			return result.isConfirmed
+		  })
+		
+		  if (shouldSave) {
+			await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/api/usuarios/${id}`, editUser)
+			.then(res => {
+				dispatch(updateUser(res.data))
+				Swal.fire('Saved!', 'Changes were saved successfully', 'success')
+				navigate('/admin')
+			})
+		  
+		  } else {
+			Swal.fire('Changes were not saved', '', 'info')
+		  }
+
+	}
 
 	
 
 	return {
 		StartLogin,
 		onRegister,
-		onDelete
+		onDelete,
+		onEditUser
 	}
 }
 
